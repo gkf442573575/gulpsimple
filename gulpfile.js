@@ -98,6 +98,13 @@ gulp.task('clean', () => {
         .pipe(clean());
 });
 
+gulp.task('clean-commonscss', () => {
+    return gulp.src(['dist/css/mixin.css', 'dist/css/reset.css'], {
+            read: false
+        })
+        .pipe(clean());
+})
+
 //重新刷新
 gulp.task('reload', () => {
     return gulp.src('dist/**/*.html')
@@ -151,13 +158,13 @@ let watch = ['watch-js', 'watch-html', 'watch-assets', 'watch-scss', 'watch-vend
 //运行default就可以命令行直接gulp就行
 gulp.task('default', () => {
     runSequence('clean', start, 'server', watch, function() {
-        console.log(`Sever run at ${localhost}:8081`);
+        console.log(`项目运行在 ${localhost}:8081`);
     })
 });
 
 // build 项目
 gulp.task('build', () => {
-    runSequence('clean', start, function() {
-
+    runSequence('clean', start, 'clean-commonscss', function() {
+        console.log('项目构建完成')
     });
 });
