@@ -66,13 +66,14 @@ gulp.task('script', () => {
         .pipe(babel({
             presets: ['env']
         })) //将ES6代码转译为可执行的JS代码
-        // .pipe(uglify()) //压缩
+        .pipe(minify()) //压缩
         .pipe(gulp.dest('dist/js'))
         .pipe(connect.reload());
 });
 //处理scss
 gulp.task('scss', () => {
     //, '!src/css/common.scss'
+    const autoprefixer = require('autoprefixer');
     return gulp.src(['src/css/**/{*.scss,*.css}'])
         .pipe(plumber({
             errorHandler: notify.onError("Error: <%= error.message %>")
@@ -81,7 +82,9 @@ gulp.task('scss', () => {
             outputStyle: 'expanded' //输出样式 outputStyle  // compressed压缩css expanded 不压缩
         }))
         // .pipe(sourcemaps.init())
-        .pipe(postcss([require('postcss-import'), require('precss'), require('autoprefixer')]))
+        .pipe(postcss([require('postcss-import'), require('precss'), autoprefixer({
+            browsers: ['last 2 versions', "IE 9"]
+        })]))
         .pipe(cleanCSS({
             compatibility: 'ie8'
         }))
@@ -95,14 +98,18 @@ gulp.task('clean', () => {
     return gulp.src(['dist/*'], {
             read: false
         })
-        .pipe(clean());
+        .pipe(clean({
+            force: true
+        }));
 });
 
 gulp.task('clean-commonscss', () => {
     return gulp.src(['dist/css/mixin.css', 'dist/css/reset.css'], {
             read: false
         })
-        .pipe(clean());
+        .pipe(clean({
+            force: true
+        }));
 })
 
 //重新刷新
@@ -141,7 +148,7 @@ gulp.task('server', () => {
         middleware: function(connect, opt) { // 代理
             return [
                 proxy('/api', {
-                    target: 'http://192.168.1.171:8080/anywide_ccyl/',
+                    target: 'http://192.168.1.171:8080/',
                     changeOrigin: true,
                     pathRewrite: {
                         '^/api': ''
