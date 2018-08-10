@@ -66,7 +66,6 @@ gulp.task('script', () => {
         .pipe(babel({
             presets: ['env']
         })) //将ES6代码转译为可执行的JS代码
-        .pipe(minify()) //压缩
         .pipe(gulp.dest('dist/js'))
         .pipe(connect.reload());
 });
