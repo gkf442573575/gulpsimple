@@ -1,17 +1,17 @@
 const gulp = require('gulp');
 const gulpScss = require('gulp-sass'); // sass
-const concat = require('gulp-concat'); // 链接
+// const concat = require('gulp-concat'); // 链接
 const uglify = require('gulp-uglify'); // 压缩js
 const cleanCSS = require('gulp-clean-css'); // 压缩css
-const rename = require('gulp-rename'); // 重命名
+// const rename = require('gulp-rename'); // 重命名
 const connect = require('gulp-connect'); // 启动服务
 const postcss = require('gulp-postcss'); // 进行css转换的
-const sourcemaps = require('gulp-sourcemaps'); // sourcemaps
+// const sourcemaps = require('gulp-sourcemaps'); // sourcemaps
 const babel = require('gulp-babel'); // gulp的babel工具
-const clean = require('gulp-clean'); //清理文件
 const proxy = require('http-proxy-middleware'); // 代理服务
 const plumber = require('gulp-plumber'); // 错误情况下不终止进程
 const notify = require('gulp-notify'); // 系统错误提醒
+const del = require('del');
 const runSequence = require('run-sequence'); // gulp的顺序执行
 const address = require('address');
 let localhost = address.ip() || 'localhost'; //获取本地ip
@@ -94,21 +94,11 @@ gulp.task('scss', () => {
 
 //清理dist下的文件
 gulp.task('clean', () => {
-    return gulp.src(['dist/*'], {
-            read: false
-        })
-        .pipe(clean({
-            force: true
-        }));
+    return del(['dist/*'])
 });
 
 gulp.task('clean-commonscss', () => {
-    return gulp.src(['dist/css/mixin.css', 'dist/css/reset.css'], {
-            read: false
-        })
-        .pipe(clean({
-            force: true
-        }));
+    return del(['dist/css/mixin.css', 'dist/css/reset.css'])
 })
 
 //重新刷新
@@ -143,7 +133,7 @@ gulp.task('server', () => {
         root: 'dist',
         host: localhost,
         livereload: true,
-        port: 8081,
+        port: 8080,
         middleware: function(connect, opt) { // 代理
             return [
                 proxy('/api', {
