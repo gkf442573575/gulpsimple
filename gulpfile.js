@@ -154,13 +154,13 @@ let watch = ['watch-js', 'watch-html', 'watch-assets', 'watch-scss', 'watch-vend
 //运行default就可以命令行直接gulp就行
 gulp.task('default', () => {
     runSequence('clean', start, 'server', watch, function() {
-        console.log(`项目运行在 ${localhost}:8081`);
+        console.log(`Service running at ${localhost}:8081`);
     })
 });
 
 // build 项目
 gulp.task('build', () => {
     runSequence('clean', start, 'clean-commonscss', function() {
-        console.log('项目构建完成')
+        console.log('Project construction completed')
     });
 });
