@@ -1,5 +1,7 @@
 # gulpsimple
-一个gulp的简易框架
+gulp的简易项目模版
+
+Gulp Simple project template
 
 ## Use
 ```bash
