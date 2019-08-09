@@ -82,7 +82,7 @@ gulp.task('scss', () => {
         }))
         // .pipe(sourcemaps.init())
         .pipe(postcss([require('postcss-import'), require('precss'), autoprefixer({
-            browsers: ['last 2 versions', "IE 9"]
+            overrideBrowserslist: ['last 2 versions', "IE 9"]
         })]))
         .pipe(cleanCSS({
             compatibility: 'ie8'
