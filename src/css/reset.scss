@@ -192,3 +192,18 @@ input[type="button"] {
         bottom: 0;
     }
 }
+
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    .slider-wrapper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        .slider-item {
+            &.slider-item-left {
+                float: left;
+            }
+        }
+    }
+}
